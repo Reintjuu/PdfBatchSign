@@ -2,17 +2,17 @@
 A batch tool that adds images and dates to existing PDF files.
 
 ## Usage
-```bash
+```
 $ PdfBatchSign.exe -p . -s C:\signature.jpg
 ```
 or
 
-```bash
+```
 $ PdfBatchSign.exe -p "C:\Long Path\To\Pdfs" -s C:\signature.png
 ```
 
 The most extensive way to call the tool is by using a command like:
-```bash
+```
 $ PdfBatchSign.exe -p C:\Pdfs -s C:\signature.png -n output -d 20-6-2019 -u 2 -i 100,200 -j 200,150 -h 20 -v
 ```
 
