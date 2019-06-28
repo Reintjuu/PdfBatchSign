@@ -18,11 +18,11 @@ namespace PdfBatchSign
 		[Option('p', "path", HelpText = "Path with PDF files to process.", Required = true)]
 		public string Path { get; set; }
 
-		[Option('n', "name", HelpText = "Output folder name.", Default = "Signed", Required = false)]
-		public string SignedFolderName { get; set; }
-
 		[Option('s', "signature", HelpText = "Path to the image of the signature which will be added to the PDF files.", Required = true)]
 		public string Image { get; set; }
+
+		[Option('n', "name", HelpText = "Output folder name.", Default = "Signed", Required = false)]
+		public string SignedFolderName { get; set; }
 
 		[Option('d', "date", HelpText = "The date to add to the PDF file, defaults to today's date.", Required = false)]
 		public string Date { get; set; }
@@ -111,7 +111,7 @@ namespace PdfBatchSign
 					{
 						Console.WriteLine("Provide an image with resolutions bigger than 0.");
 						return;
-					}					
+					}
 
 					foreach (string file in files)
 					{
