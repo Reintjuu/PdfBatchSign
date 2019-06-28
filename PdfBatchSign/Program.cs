@@ -115,12 +115,22 @@ namespace PdfBatchSign
 
 					foreach (string file in files)
 					{
-						// Modifying the PDF located at "source" and saving to "target".
-						PdfDocument pdfDocument = new PdfDocument(new PdfReader(file), new PdfWriter($"{path}/{o.SignedFolderName}/{Path.GetFileName(file)}"));
+						PdfDocument pdfDocument;
+						try
+						{
+							// Modifying the PDF located at "source" and saving to "target".
+							pdfDocument = new PdfDocument(new PdfReader(file), new PdfWriter($"{path}/{o.SignedFolderName}/{Path.GetFileName(file)}"));
+						}
+						catch
+						{
+							Console.WriteLine($"Failed to load {file}, skipping.");
+							continue;
+						}
+
 						// Document to add layout elements: paragraphs, images etc
 						Document document = new Document(pdfDocument);
 
-						// Create layout image object and provide parameters.
+						// Create and add the layout image object.
 						Image image = new Image(imageData)
 							.ScaleAbsolute(o.AllowedImageHeight / imageData.GetHeight() * imageData.GetWidth(), o.AllowedImageHeight)
 							.SetFixedPosition(o.PageNumber, o.ImagePosition.ElementAtOrDefault(0), o.ImagePosition.ElementAtOrDefault(1));
