@@ -16,6 +16,10 @@ The most extensive way to call the tool is by using a command like:
 $ PdfBatchSign.exe -p C:\Pdfs -s C:\signature.png -n output -d 20-6-2019 -u 2 -i 100,200 -j 200,150 -h 20 -v
 ```
 
+## Command builder
+For additional convenience, a command builder has been added. Just open the `CommandBuilder.bat` file. 
+This script asks questions based on the tool's input and eventually executes the command.
+
 ## More options
 ```bash
 PdfBatchSign.exe --help
