@@ -90,6 +90,10 @@ namespace PdfBatchSign
 							continue;
 						}
 
+						// Fixes the page rotation bug. The content that will be added now always matches the originally 
+						// viewed orientation (not the orientation which has been set in the document's properties).
+						pdfDocument.GetPage(o.PageNumber).SetIgnorePageRotationForContent(true);
+
 						// Document to add layout elements: paragraphs, images etc
 						Document document = new Document(pdfDocument);
 
