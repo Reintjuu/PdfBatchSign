@@ -19,12 +19,6 @@ namespace PdfBatchSign
 			Parser.Default.ParseArguments<Options>(args)
 				.WithParsed(o =>
 				{
-					if (o.PageNumber < 1)
-					{
-						Console.WriteLine("Provide a page number bigger than or equal to 1.");
-						return;
-					}
-
 					if (o.AllowedImageHeight < 1)
 					{
 						Console.WriteLine("Provide an allowed image height bigger than or equal to 1.");
@@ -90,27 +84,30 @@ namespace PdfBatchSign
 							continue;
 						}
 
-						// Fixes the page rotation bug. The content that will be added now always matches the originally 
-						// viewed orientation (not the orientation which has been set in the document's properties).
-						pdfDocument.GetPage(o.PageNumber).SetIgnorePageRotationForContent(true);
-
 						// Document to add layout elements: paragraphs, images etc
 						Document document = new Document(pdfDocument);
 
-						// Create and add the layout image object.
-						Image image = new Image(imageData)
-							.ScaleAbsolute(o.AllowedImageHeight / imageData.GetHeight() * imageData.GetWidth(), o.AllowedImageHeight)
-							.SetFixedPosition(o.PageNumber, o.ImagePosition.ElementAtOrDefault(0), o.ImagePosition.ElementAtOrDefault(1));
-						document.Add(image);
+						for (int pageNumber = 1; pageNumber <= pdfDocument.GetNumberOfPages(); pageNumber++)
+						{
+							// Fixes the page rotation bug. The content that will be added now always matches the originally 
+							// viewed orientation (not the orientation which has been set in the document's properties).
+							pdfDocument.GetPage(pageNumber).SetIgnorePageRotationForContent(true);
 
-						// Create the date text.
-						var paragraph = new Paragraph(!string.IsNullOrEmpty(o.Date) ? o.Date : DateTime.Now.ToShortDateString())
-							.SetMargin(0)
-							.SetMultipliedLeading(1)
-							.SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN))
-							.SetFontSize(10);
-						// Add the date text to the document.
-						document.ShowTextAligned(paragraph, o.DatePosition.ElementAtOrDefault(0), o.DatePosition.ElementAtOrDefault(1), o.PageNumber, TextAlignment.LEFT, VerticalAlignment.BOTTOM, 0);
+							// Create and add the layout image object.
+							Image image = new Image(imageData)
+								.ScaleAbsolute(o.AllowedImageHeight / imageData.GetHeight() * imageData.GetWidth(), o.AllowedImageHeight)
+								.SetFixedPosition(pageNumber, o.ImagePosition.ElementAtOrDefault(0), o.ImagePosition.ElementAtOrDefault(1));
+							document.Add(image);
+
+							// Create the date text.
+							var paragraph = new Paragraph(!string.IsNullOrEmpty(o.Date) ? o.Date : DateTime.Now.ToShortDateString())
+								.SetMargin(0)
+								.SetMultipliedLeading(1)
+								.SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_ROMAN))
+								.SetFontSize(10);
+							// Add the date text to the document.
+							document.ShowTextAligned(paragraph, o.DatePosition.ElementAtOrDefault(0), o.DatePosition.ElementAtOrDefault(1), pageNumber, TextAlignment.LEFT, VerticalAlignment.BOTTOM, 0);
+						}
 
 						document.Close();
 

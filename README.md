@@ -13,7 +13,7 @@ $ PdfBatchSign.exe -p "C:\Long Path\To\Pdfs" -s C:\signature.png
 
 The most extensive way to call the tool is by using a command like:
 ```
-$ PdfBatchSign.exe -p C:\Pdfs -s C:\signature.png -n output -d 20-6-2019 -u 2 -i 100,200 -j 200,150 -h 20 -v
+$ PdfBatchSign.exe -p C:\Pdfs -s C:\signature.png -n output -d 20-6-2019 -i 100,200 -j 200,150 -h 20 -v
 ```
 
 ## Command builder
@@ -38,8 +38,6 @@ Copyright c  2019
   -n, --name                  (Default: Signed) Output folder name.
 
   -d, --date                  The date to add to the PDF file, defaults to today's date.
-
-  -u, --pagenumber            (Default: 1) The page to add the content to.
 
   -i, --signatureposition     (Default: 150 430) The X- and Y-position of the image, relative to the left-bottom of the
                               page. Separated by a comma (e.g. 150,430).

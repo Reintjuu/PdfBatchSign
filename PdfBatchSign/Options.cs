@@ -17,9 +17,6 @@ namespace PdfBatchSign
 		[Option('d', "date", HelpText = "The date to add to the PDF file, defaults to today's date.", Required = false)]
 		public string Date { get; set; }
 
-		[Option('u', "pagenumber", HelpText = "The page to add the content to.", Default = 1, Required = false)]
-		public int PageNumber { get; set; }
-
 		[Option('i', "signatureposition",
 			HelpText = "The X- and Y-position of the image, relative to the left-bottom of the page. Separated by a comma (e.g. 150,430).",
 			Min = 2, Max = 2, Required = false, Default = new int[] { 150, 430 }, Separator = ',')]
